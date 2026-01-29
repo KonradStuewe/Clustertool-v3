@@ -74,12 +74,12 @@ spec:
                 readOnly: true
 #--------------------------Temp psycopg2 fix---------------------------------------
         release_name: home-assistant
-        service:
-            main:
-                type: LoadBalancer
-                integrations:
-                metallb:
-                    enabled: true
+#        service:
+#            main:
+#                type: LoadBalancer
+#                integrations:
+#                metallb:
+#                    enabled: true
         ingress:
             main:
                 enabled: true
