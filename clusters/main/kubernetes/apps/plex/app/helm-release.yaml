@@ -51,7 +51,7 @@ spec:
             additionalAdvertiseURL: ""
             disableGDM: true
             requireHTTPS: false
-            serverIP: 10.0.0.211, plex.${DOMAIN_0}
+            serverIP: 10.0.0.215, plex.${DOMAIN_0}
         ingress:
             main:
                 enabled: true
