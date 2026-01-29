@@ -1,0 +1,36 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+    name: cloudflareddns
+    namespace: cloudflareddns
+spec:
+    interval: 15m
+    chart:
+        spec:
+            chart: cloudflareddns
+            version: 13.0.13
+            sourceRef:
+                kind: HelmRepository
+                name: truecharts
+                namespace: flux-system
+    releaseName: cloudflareddns
+    values:
+        # for now until image is fixed
+        image:
+            repository: ghcr.io/hotio/cloudflareddns
+            pullPolicy: IfNotPresent
+            tag: latest@sha256:195c3d07afc76e6db7119bd902f0565342976b5f6537461a97e09229dde14a5b
+        securityContext:
+            container:
+                runAsNonRoot: false
+                readOnlyRootFilesystem: false
+                runAsUser: 0
+                runAsGroup: 0
+        TZ: Europe/Berlin
+        cloudflareddns:
+            api_token: ${CF_DDNS_API_TOKEN}
+            host_zone_record:
+                - domain: ${CF_DDNS_DOMAIN}
+                  record: A
+                  zone: ${CF_DDNS_ZONE}
+        release_name: cloudflareddns
