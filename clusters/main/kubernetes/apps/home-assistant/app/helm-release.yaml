@@ -84,4 +84,4 @@ spec:
                             pathType: Prefix
         resources:
             requests: # TEMP UNTIL CPU UPGRADE
-                pu: 100m
+                cpu: 100m
