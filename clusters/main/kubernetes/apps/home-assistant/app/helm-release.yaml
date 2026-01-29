@@ -36,7 +36,7 @@ spec:
                 cluster:
                     singleNode: true
                 database: home-assistant
-                mode: standalone
+                mode: recovery
                 password: ${HOME_ASSISTANT_DB_PW}
                 recovery:
                     credentials: aws
