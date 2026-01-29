@@ -52,3 +52,18 @@ spec:
                         enabled: true
             websockets:
                 type: ClusterIP
+        ingress:
+            main:
+                enabled: true
+                ingressClassName: internal
+                integrations:
+                    traefik:
+                        enabled: false
+                    certManager:
+                        enabled: true
+                        certificateIssuer: domain-0-le-prod
+                hosts:
+                    - host: mqtt.${DOMAIN_0}
+                      paths:
+                          - path: /
+                            pathType: Prefix
