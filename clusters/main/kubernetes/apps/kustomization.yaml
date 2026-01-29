@@ -7,3 +7,5 @@ resources:
   - external-proxmox/ks.yaml
   - flaresolverr/ks.yaml
   - home-assistant/ks.yaml
+  - mosquitto/ks.yaml
+  - tailscale/ks.yaml

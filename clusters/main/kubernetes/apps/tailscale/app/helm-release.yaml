@@ -1,0 +1,32 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+    name: tailscale
+    namespace: tailscale
+spec:
+    interval: 15m
+    chart:
+        spec:
+            chart: tailscale
+            version: 11.17.14
+            sourceRef:
+                kind: HelmRepository
+                name: truecharts
+                namespace: flux-system
+    releaseName: tailscale
+    install:
+        createNamespace: true
+        crds: CreateReplace
+        remediation:
+            retries: 3
+    upgrade:
+        crds: CreateReplace
+        remediation:
+            retries: 3
+    values:
+        tailscale:
+            authkey: ${TAILSCALE_AUTH_KEY}
+            accept_dns: true
+            routes: ${TAILSCALE_ROUTES}
+            hostname: "talos"
+            advertise_as_exit_node: true
