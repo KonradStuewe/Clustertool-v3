@@ -8,5 +8,3 @@ resources:
   - kube-system
   - networking
   - system
-  - plex/ks.yaml
-  - plex-auto-languages/ks.yaml
