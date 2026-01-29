@@ -75,6 +75,3 @@ spec:
                         enabled: true
         podOptions:
             hostUsers: true
-#        resources:
-#            limits:
-#                gpu.intel.com/i915: 1
