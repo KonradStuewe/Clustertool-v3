@@ -6,4 +6,4 @@ resources:
   - cloudflareddns/ks.yaml
   - external-proxmox/ks.yaml
   - flaresolverr/ks.yaml
-#  - home-assistant/ks.yaml
+  - home-assistant/ks.yaml
