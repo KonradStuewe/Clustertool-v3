@@ -40,7 +40,7 @@ spec:
                 password: ${HOME_ASSISTANT_DB_PW}
                 recovery:
                     credentials: aws
-                    enabled: true
+                    enabled: false
         credentials:
             aws:
                 type: s3
