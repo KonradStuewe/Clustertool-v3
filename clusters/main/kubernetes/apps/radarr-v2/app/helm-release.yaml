@@ -1,0 +1,68 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+    name: radarr-v2
+    namespace: radarr-v2
+spec:
+    interval: 15m
+    chart:
+        spec:
+            chart: radarr
+            version: 26.3.18
+            sourceRef:
+                kind: HelmRepository
+                name: truecharts
+                namespace: flux-system
+    releaseName: radarr-v2
+    values:
+        TZ: Europe/Berlin
+        credentials:
+            aws:
+                type: s3
+                accessKey: ${AWS_ACCESS_KEY}
+                bucket: ${AWS_BUCKET}
+                encrKey: ${AWS_ENCR_KEY}
+                secretKey: ${AWS_SECRET_KEY}
+                url: ${AWS_URL}
+        persistence:
+            config:
+                volsync:
+                    - credentials: aws
+                      type: restic
+                      name: radarr-config
+                      src:
+                        enabled: true
+                      dest:
+                        enabled: true
+            data-vol:
+                enabled: true
+                type: nfs
+                mountPath: /data
+                path: /mnt/Helios/data
+                server: ${LOCAL_NAS_IP}
+        release_name: radarr-v2
+        securityContext:
+            container:
+                UMASK: "0022"
+                runAsGroup: 568
+                runAsUser: 568
+            pod:
+                fsGroupChangePolicy: OnRootMismatch
+        ingress:
+            main:
+                enabled: true
+                ingressClassName: internal
+                integrations:
+                    traefik:
+                        enabled: false
+                    certManager:
+                        enabled: true
+                        certificateIssuer: domain-0-le-prod
+                hosts:
+                    - host: radarr.${DOMAIN_0}
+                      paths:
+                          - path: /
+                            pathType: Prefix
+        resources:
+            requests: # TEMP UNTIL CPU UPGRADE
+                cpu: 100m

@@ -13,3 +13,7 @@ resources:
   - plex-auto-languages/ks.yaml
   - qbittorrent/ks.yaml
   - qbittorrent-torrentleech/ks.yaml
+  - prowlarr-v2/ks.yaml
+  - radarr-v2/ks.yaml
+  - requestrr/ks.yaml
+  - sonarr-v2/ks.yaml

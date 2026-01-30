@@ -1,0 +1,82 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+    name: sonarr-v2
+    namespace: sonarr-v2
+spec:
+    interval: 15m
+    chart:
+        spec:
+            chart: sonarr
+            version: 25.2.18
+            sourceRef:
+                kind: HelmRepository
+                name: truecharts
+                namespace: flux-system
+    releaseName: sonarr-v2
+    values:
+        TZ: Europe/Berlin
+        credentials:
+            aws:
+                type: s3
+                accessKey: ${AWS_ACCESS_KEY}
+                bucket: ${AWS_BUCKET}
+                encrKey: ${AWS_ENCR_KEY}
+                secretKey: ${AWS_SECRET_KEY}
+                url: ${AWS_URL}
+        persistence:
+            config:
+                volsync:
+                    - credentials: aws
+                      type: restic
+                      name: sonarr-config
+                      src:
+                        enabled: true
+                      dest:
+                        enabled: true
+            data-vol:
+                enabled: true
+                type: nfs
+                mountPath: /data
+                path: /mnt/Helios/data
+                server: ${LOCAL_NAS_IP}
+        release_name: sonarr-v2
+        securityContext:
+            container:
+                UMASK: "0022"
+                runAsGroup: 568
+                runAsUser: 568
+            pod:
+                fsGroupChangePolicy: OnRootMismatch
+        ingress:
+            main:
+                enabled: true
+                ingressClassName: internal
+                integrations:
+                    traefik:
+                        enabled: false
+                    certManager:
+                        enabled: true
+                        certificateIssuer: domain-0-le-prod
+                    homepage:
+                        enabled: true
+                        name: Sonarr
+                        group: "Media Managment"
+                        siteMonitor: http://sonarr-v2.sonarr-v2.svc.cluster.local:8989
+                        widget:
+                            custom:
+                                key: "${SONARR_API_KEY}"
+                hosts:
+                    - host: sonarr.${DOMAIN_0}
+                      paths:
+                          - path: /
+                            pathType: Prefix
+        service:
+            main:
+                type: LoadBalancer
+                integrations:
+                    metallb:
+                        enabled: true
+        resources:
+            requests: # TEMP UNTIL CPU UPGRADE
+                cpu: 100m

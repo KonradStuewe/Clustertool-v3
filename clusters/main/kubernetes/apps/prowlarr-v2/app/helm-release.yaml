@@ -1,0 +1,61 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+    name: prowlarr-v2
+    namespace: prowlarr-v2
+spec:
+    interval: 15m
+    chart:
+        spec:
+            chart: prowlarr
+            version: 21.3.19
+            sourceRef:
+                kind: HelmRepository
+                name: truecharts
+                namespace: flux-system
+    releaseName: prowlarr-v2
+    values:
+        TZ: Europe/Berlin
+        credentials:
+            aws:
+                type: s3
+                accessKey: ${AWS_ACCESS_KEY}
+                bucket: ${AWS_BUCKET}
+                encrKey: ${AWS_ENCR_KEY}
+                secretKey: ${AWS_SECRET_KEY}
+                url: ${AWS_URL}
+        persistence:
+            config:
+                volsync:
+                    - credentials: aws
+                      type: restic
+                      name: prowlarr-config
+                      src:
+                        enabled: true
+                      dest:
+                        enabled: true
+        release_name: prowlarr-v2
+        ingress:
+            main:
+                enabled: true
+                ingressClassName: internal
+                integrations:
+                    traefik:
+                        enabled: false
+                    certManager:
+                        enabled: true
+                        certificateIssuer: domain-0-le-prod
+                hosts:
+                    - host: prowlarr.${DOMAIN_0}
+                      paths:
+                          - path: /
+                            pathType: Prefix
+        service:
+            main:
+                type: LoadBalancer
+                integrations:
+                    metallb:
+                        enabled: true
+        resources:
+            requests: # TEMP UNTIL CPU UPGRADE
+                cpu: 100m
