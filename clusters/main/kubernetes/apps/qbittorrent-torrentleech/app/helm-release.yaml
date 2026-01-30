@@ -17,20 +17,20 @@ spec:
     values:
         TZ: Europe/Berlin
         addons:
-            vpn:
-                env:
-                    FIREWALL_VPN_INPUT_PORTS: ${QBIT_T_VPN_INPUT_PORT}
-                    WIREGUARD_ENDPOINT_IP: ${QBIT_T_VPN_ENDPOINT_IP}
-                    WIREGUARD_ENDPOINT_PORT: ${QBIT_T_VPN_ENDPOINT_PORT}
-                    VPN_SERVICE_PROVIDER: 'custom '
-                    VPN_TYPE: wireguard
-                    WIREGUARD_ADDRESSES: ${QBIT_T_VPN_WIREGUARD_ADDRESS}
-                    WIREGUARD_PRIVATE_KEY: ${QBIT_T_VPN_PRIVATE_KEY}
-                    WIREGUARD_PUBLIC_KEY: ${QBIT_T_VPN_PUBLIC_KEY}
-                excludedNetworks_IPv4:
-                    - 10.0.0.0/24
-                killSwitch: true
-                type: gluetun
+            gluetun:
+                enabled: true
+                container:
+                    env:
+                        FIREWALL: "on"
+                        FIREWALL_OUTBOUND_SUBNETS: "10.0.0.0/24"
+                        VPN_TYPE: wireguard
+                        VPN_SERVICE_PROVIDER: 'custom '
+                        FIREWALL_VPN_INPUT_PORTS: ${QBIT_T_VPN_INPUT_PORT}
+                        WIREGUARD_ENDPOINT_IP: ${QBIT_T_VPN_ENDPOINT_IP}
+                        WIREGUARD_ENDPOINT_PORT: ${QBIT_T_VPN_ENDPOINT_PORT}
+                        WIREGUARD_ADDRESSES: ${QBIT_T_VPN_WIREGUARD_ADDRESS}
+                        WIREGUARD_PRIVATE_KEY: ${QBIT_T_VPN_PRIVATE_KEY}
+                        WIREGUARD_PUBLIC_KEY: ${QBIT_T_VPN_PUBLIC_KEY}
         credentials:
             aws:
                 type: s3
