@@ -18,3 +18,5 @@ resources:
   - requestrr/ks.yaml
   - sonarr-v2/ks.yaml
   - lldap/ks.yaml
+  - authelia/ks.yaml
+  - omada-controller/ks.yaml

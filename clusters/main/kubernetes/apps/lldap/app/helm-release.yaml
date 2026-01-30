@@ -21,7 +21,6 @@ spec:
                 backups:
                     credentials: aws
                     enabled: true
-#                    revision: "3"
                 mode: recovery
                 monitoring:
                     enablePodMonitor: true
