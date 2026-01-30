@@ -1,0 +1,89 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+    name: lldap
+    namespace: lldap
+spec:
+    interval: 15m
+    chart:
+        spec:
+            chart: lldap
+            version: 8.13.15
+            sourceRef:
+                kind: HelmRepository
+                name: truecharts
+                namespace: flux-system
+    releaseName: lldap
+    values:
+        TZ: Europe/Berlin
+        cnpg:
+            main:
+                backups:
+                    credentials: aws
+                    enabled: true
+#                    revision: "3"
+                mode: recovery
+                monitoring:
+                    enablePodMonitor: true
+                password: ${LLDAP_DB_PW}
+                recovery:
+                    credentials: aws
+                    enabled: true
+        credentials:
+            aws:
+                type: s3
+                accessKey: ${AWS_ACCESS_KEY}
+                bucket: ${AWS_BUCKET}
+                encrKey: ${AWS_ENCR_KEY}
+                secretKey: ${AWS_SECRET_KEY}
+                url: ${AWS_URL}
+        persistence:
+            data:
+                volsync:
+                    - credentials: aws
+                      name: lldap-config
+                      src:
+                          enabled: true
+                      dest:
+                          enabled: true
+                      type: restic
+        release_name: lldap
+        workload:
+            main:
+                podSpec:
+                    containers:
+                        main:
+                            env:
+                                LLDAP_HTTP_URL: ${LLDAP_HTTP_URL}
+                                LLDAP_LDAP_BASE_DN: ${LLDAP_LDAP_BASE_DN}
+                                LLDAP_LDAP_USER_EMAIL: ${LLDAP_LDAP_USER_EMAIL}
+                                LLDAP_LDAP_USER_PASS: ${LLDAP_LDAP_USER_PASS}
+        ingress:
+            main:
+                enabled: true
+                ingressClassName: internal
+                integrations:
+                    traefik:
+                        enabled: false
+                    certManager:
+                        enabled: true
+                        certificateIssuer: domain-0-le-prod
+                hosts:
+                    - host: lldap.${DOMAIN_0}
+                      paths:
+                          - path: /
+                            pathType: Prefix
+            ldap:
+                enabled: true
+                ingressClassName: internal
+                integrations:
+                    traefik:
+                        enabled: false
+                    certManager:
+                        enabled: true
+                        certificateIssuer: domain-0-le-prod
+                hosts:
+                    - host: ldap.${DOMAIN_0}
+                      paths:
+                          - path: /
+                            pathType: Prefix
