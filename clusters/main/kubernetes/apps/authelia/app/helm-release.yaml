@@ -107,7 +107,7 @@ spec:
                     retentionPolicy: "14d"
                 cluster:
                     singleNode: true
-                mode: recovery
+                mode: standalone
                 monitoring:
                     enablePodMonitor: true
                 password: ${AUTHELIA_DB_PW}
