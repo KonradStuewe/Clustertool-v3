@@ -1,0 +1,92 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+    name: qbittorrent-torrentleech
+    namespace: qbittorrent-torrentleech
+spec:
+    interval: 15m
+    chart:
+        spec:
+            chart: qbittorrent
+            version: 24.2.20
+            sourceRef:
+                kind: HelmRepository
+                name: truecharts
+                namespace: flux-system
+    releaseName: qbittorrent-torrentleech
+    values:
+        TZ: Europe/Berlin
+        addons:
+            vpn:
+                env:
+                    FIREWALL_VPN_INPUT_PORTS: ${QBIT_T_VPN_INPUT_PORT}
+                    WIREGUARD_ENDPOINT_IP: ${QBIT_T_VPN_ENDPOINT_IP}
+                    WIREGUARD_ENDPOINT_PORT: ${QBIT_T_VPN_ENDPOINT_PORT}
+                    VPN_SERVICE_PROVIDER: 'custom '
+                    VPN_TYPE: wireguard
+                    WIREGUARD_ADDRESSES: ${QBIT_T_VPN_WIREGUARD_ADDRESS}
+                    WIREGUARD_PRIVATE_KEY: ${QBIT_T_VPN_PRIVATE_KEY}
+                    WIREGUARD_PUBLIC_KEY: ${QBIT_T_VPN_PUBLIC_KEY}
+                excludedNetworks_IPv4:
+                    - 10.0.0.0/24
+                killSwitch: true
+                type: gluetun
+        credentials:
+            aws:
+                type: s3
+                accessKey: ${AWS_ACCESS_KEY}
+                bucket: ${AWS_BUCKET}
+                encrKey: ${AWS_ENCR_KEY}
+                secretKey: ${AWS_SECRET_KEY}
+                url: ${AWS_URL}
+        ingress:
+            main:
+                enabled: true
+                ingressClassName: internal
+                integrations:
+                    traefik:
+                        enabled: false
+                    certManager:
+                        enabled: true
+                        certificateIssuer: domain-0-le-prod
+                hosts:
+                    - host: qbit2.${DOMAIN_0}
+                      paths:
+                          - path: /
+                            pathType: Prefix
+        persistence:
+            config:
+                volsync:
+                    - credentials: aws
+                      dest:
+                        enabled: true
+                      name: qbt-tl-config
+                      src:
+                        enabled: true
+                      type: restic
+            data-vol:
+                enabled: true
+                type: nfs
+                mountPath: /data/torrents
+                path: /mnt/Helios/data/torrents/torrentleech
+                server: ${LOCAL_NAS_IP}
+        release_name: qbittorrent-torrentleech
+        securityContext:
+            container:
+                UMASK: "0022"
+                runAsGroup: 568
+                runAsUser: 568
+            pod:
+                fsGroupChangePolicy: OnRootMismatch
+        service:
+            main:
+                type: LoadBalancer
+                integrations:
+                    metallb:
+                        enabled: true
+            torrent:
+                type: LoadBalancer
+                integrations:
+                    metallb:
+                        enabled: true
+

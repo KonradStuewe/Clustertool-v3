@@ -11,3 +11,5 @@ resources:
   - tailscale/ks.yaml
   - plex/ks.yaml
   - plex-auto-languages/ks.yaml
+  - qbittorrent/ks.yaml
+  - qbittorrent-torrentleech/ks.yaml
