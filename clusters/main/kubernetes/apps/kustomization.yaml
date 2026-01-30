@@ -17,3 +17,4 @@ resources:
   - radarr-v2/ks.yaml
   - requestrr/ks.yaml
   - sonarr-v2/ks.yaml
+  - lldap/ks.yaml
