@@ -20,3 +20,4 @@ resources:
   - lldap/ks.yaml
   - authelia/ks.yaml
   - omada-controller/ks.yaml
+  - immich/ks.yaml
