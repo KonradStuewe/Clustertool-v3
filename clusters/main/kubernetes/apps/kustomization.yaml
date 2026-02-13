@@ -21,3 +21,4 @@ resources:
   - authelia/ks.yaml
   - omada-controller/ks.yaml
 #  - immich/ks.yaml
+  - unpackerr/ks.yaml
