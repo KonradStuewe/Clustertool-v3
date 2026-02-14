@@ -4,7 +4,6 @@ resources:
   - kubernetes-dashboard/ks.yaml
   - cloudflared/ks.yaml
   - cloudflareddns/ks.yaml
-  - external-proxmox/ks.yaml
   - flaresolverr/ks.yaml
   - home-assistant/ks.yaml
   - mosquitto/ks.yaml
@@ -21,4 +20,4 @@ resources:
   - authelia/ks.yaml
   - omada-controller/ks.yaml
 #  - immich/ks.yaml
-  - unpackerr/ks.yaml
+#  - unpackerr/ks.yaml

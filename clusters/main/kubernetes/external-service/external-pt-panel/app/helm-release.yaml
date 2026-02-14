@@ -1,8 +1,8 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-    name: external-proxmox
-    namespace: external-proxmox
+    name: external-pt-panel
+    namespace: external-service
 spec:
     interval: 15m
     chart:
@@ -13,18 +13,16 @@ spec:
                 kind: HelmRepository
                 name: truecharts
                 namespace: flux-system
-    releaseName: external-proxmox
     values:
         TZ: Europe/Berlin
-        release_name: external-proxmox
         service:
             main:
                 type: ExternalIP
-                externalIP: "${EXTERNAL_PROXMOX}"
+                externalIP: "${EXTERNAL_PT_PANEL}"
                 ports:
                     main:
                         protocol: https
-                        port: 8006
+                        port: 443
         ingress:
             main:
                 enabled: true
@@ -38,4 +36,4 @@ spec:
                         enabled: true
                         certificateIssuer: domain-0-le-prod
                 hosts:
-                    - host: prox.${DOMAIN_0}
+                    - host: pt.${DOMAIN_0}

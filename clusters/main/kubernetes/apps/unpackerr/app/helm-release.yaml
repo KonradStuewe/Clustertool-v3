@@ -16,20 +16,6 @@ spec:
     releaseName: unpackerr
     values:
         TZ: Europe/Berlin
-        cnpg:
-            main:
-                backups:
-                    credentials: aws
-                    enabled: true
-                    retentionPolicy: "14d"
-                cluster:
-                    singleNode: true
-                database: unpackerr
-                mode: standalone
-                password: ${UNPACKERR_DB_PW}
-                recovery:
-                    credentials: aws
-                    enabled: true
         credentials:
             aws:
                 type: s3
