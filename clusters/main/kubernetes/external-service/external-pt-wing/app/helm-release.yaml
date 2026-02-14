@@ -21,14 +21,14 @@ spec:
                 externalIP: "${EXTERNAL_PT_WING}"
                 ports:
                     main:
-                        protocol: https
-                        port: 443
+                        protocol: http
+                        port: 80
         ingress:
             main:
                 enabled: true
                 ingressClassName: internal
                 annotations:
-                    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+                    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
                 integrations:
                     traefik:
                         enabled: false
