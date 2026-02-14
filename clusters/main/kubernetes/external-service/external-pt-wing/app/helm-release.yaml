@@ -22,7 +22,7 @@ spec:
                 ports:
                     main:
                         protocol: http
-                        port: 8080
+                        port: 443
         ingress:
             main:
                 enabled: true
