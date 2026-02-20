@@ -34,3 +34,10 @@ spec:
                   record: A
                   zone: ${CF_DDNS_ZONE}
         release_name: cloudflareddns
+        workload:
+            main:
+                podSpec:
+                    containers:
+                        main:
+                            env:
+                                UPDATE_IPV6: false
