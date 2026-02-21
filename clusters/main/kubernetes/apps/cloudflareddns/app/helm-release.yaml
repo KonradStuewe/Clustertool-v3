@@ -13,27 +13,25 @@ spec:
                 kind: HelmRepository
                 name: truecharts
                 namespace: flux-system
-    releaseName: cloudflareddns
     values:
         # for now until image is fixed
         image:
             repository: ghcr.io/hotio/cloudflareddns
             pullPolicy: IfNotPresent
             tag: latest@sha256:195c3d07afc76e6db7119bd902f0565342976b5f6537461a97e09229dde14a5b
-        securityContext:
-            container:
-                runAsNonRoot: false
-                readOnlyRootFilesystem: false
-                runAsUser: 0
-                runAsGroup: 0
+#        securityContext:
+#            container:
+#                runAsNonRoot: false
+#                readOnlyRootFilesystem: false
+#                runAsUser: 0
+#                runAsGroup: 0
         TZ: Europe/Berlin
-        cloudflareddns:
-            api_token: ${CF_DDNS_API_TOKEN}
-            host_zone_record:
-                - domain: ${CF_DDNS_DOMAIN}
-                  record: A
-                  zone: ${CF_DDNS_ZONE}
-        release_name: cloudflareddns
+#        cloudflareddns:
+#            api_token: ${CF_DDNS_API_TOKEN}
+#            host_zone_record:
+#                - domain: ${CF_DDNS_DOMAIN}
+#                  record: A
+#                  zone: ${CF_DDNS_ZONE}
         workload:
             main:
                 podSpec:
@@ -41,3 +39,6 @@ spec:
                         main:
                             env:
                                 UPDATE_IPV6: false
+                                CF_APITOKEN: ${CF_DDNS_API_TOKEN}
+                                CF_HOSTS: "ddns.${DOMAIN_0}"
+
