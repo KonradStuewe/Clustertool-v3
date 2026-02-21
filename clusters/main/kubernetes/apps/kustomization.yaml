@@ -3,7 +3,7 @@ kind: Kustomization
 resources:
   - kubernetes-dashboard/ks.yaml
   - cloudflared/ks.yaml
-  - cloudflareddns/ks.yaml
+#  - cloudflareddns/ks.yaml
   - flaresolverr/ks.yaml
   - home-assistant/ks.yaml
   - mosquitto/ks.yaml
