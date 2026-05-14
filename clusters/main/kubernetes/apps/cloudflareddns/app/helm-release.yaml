@@ -8,7 +8,7 @@ spec:
     chart:
         spec:
             chart: cloudflareddns
-            version: 13.1.2
+            version: 13.4.2
             sourceRef:
                 kind: HelmRepository
                 name: truecharts
@@ -18,13 +18,13 @@ spec:
         image:
             repository: ghcr.io/hotio/cloudflareddns
             pullPolicy: IfNotPresent
-            tag: latest@sha256:195c3d07afc76e6db7119bd902f0565342976b5f6537461a97e09229dde14a5b
-#        securityContext:
-#            container:
-#                runAsNonRoot: false
-#                readOnlyRootFilesystem: false
-#                runAsUser: 0
-#                runAsGroup: 0
+            tag: latest@sha256:93accf096f89735a3c934f20a7c2ff9c3782b27292576c703375d571ccedc9ff
+        securityContext:
+            container:
+                runAsNonRoot: false
+                readOnlyRootFilesystem: false
+                runAsUser: 0
+                runAsGroup: 0
         TZ: Europe/Berlin
 #        cloudflareddns:
 #            api_token: ${CF_DDNS_API_TOKEN}
