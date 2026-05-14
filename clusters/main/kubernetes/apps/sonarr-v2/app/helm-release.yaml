@@ -52,6 +52,11 @@ spec:
             main:
                 enabled: true
                 ingressClassName: internal
+                annotations:
+                    nginx.ingress.kubernetes.io/proxy-connect-timeout: "600"
+                    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+                    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+                    nginx.ingress.kubernetes.io/send-timeout: "600"
                 integrations:
                     traefik:
                         enabled: false
