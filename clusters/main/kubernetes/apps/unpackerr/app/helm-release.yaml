@@ -15,6 +15,15 @@ spec:
                 namespace: flux-system
     releaseName: unpackerr
     values:
+        workload:
+            main:
+                podSpec:
+                    containers:
+                        main:
+                            env:
+                                # Sonarr Config
+                                UN_SONARR_0_URL: ${UNPACKERR_SONARR_URL}
+                                UN_SONARR_0_API_KEY: ${UNPACKERR_SONARR_API}
         TZ: Europe/Berlin
         credentials:
             aws:
@@ -24,6 +33,29 @@ spec:
                 encrKey: ${AWS_ENCR_KEY}
                 secretKey: ${AWS_SECRET_KEY}
                 url: ${AWS_URL}
+        persistence:
+            config:
+                volsync:
+                    - credentials: aws
+                      type: restic
+                      name: unpackerr-config
+                      src:
+                        enabled: true
+                      dest:
+                        enabled: true
+            data-vol:
+                enabled: true
+                type: nfs
+                mountPath: /data
+                path: /mnt/Helios/data
+                server: ${LOCAL_NAS_IP}
+        securityContext:
+            container:
+                UMASK: "0022"
+                runAsGroup: 568
+                runAsUser: 568
+            pod:
+                fsGroupChangePolicy: OnRootMismatch
 #        ingress:
 #            main:
 #                enabled: true
