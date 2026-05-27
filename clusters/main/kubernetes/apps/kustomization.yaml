@@ -21,3 +21,4 @@ resources:
   - omada-controller/ks.yaml
 #  - immich/ks.yaml
   - unpackerr/ks.yaml
+  - homebox/ks.yaml
