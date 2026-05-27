@@ -39,14 +39,6 @@ spec:
             mailer_from: ${HOMEBOX_MAILER_FROM}
             mailer_username: ${HOMEBOX_MAILER_USER}
             mailer_password: ${HOMEBOX_MAILER_PASS}
-        workload:
-            main:
-              podSpec:
-                containers:
-                  main:
-                    envFrom:
-                      - secretRef:
-                          name: ${HOMEBOX_SECRET}
         ingress:
             main:
                 enabled: true
