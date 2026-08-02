@@ -27,7 +27,6 @@ spec:
         tailscale:
             authkey: ${TAILSCALE_AUTH_KEY}
             accept_dns: true
-            auth_once: false
             routes: ${TAILSCALE_ROUTES}
             hostname: "talos"
             advertise_as_exit_node: true
