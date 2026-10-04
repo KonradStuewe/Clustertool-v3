@@ -82,7 +82,7 @@ spec:
                 # SMTP hostname, required if SMTP is enabled.
                 host: ${VAULTWARDEN_MAILER_HOST}
                 # SMTP sender e-mail address, required if SMTP is enabled.
-                from: ${VAULTWARDEN_MAILER_HOST}
+                from: ${VAULTWARDEN_MAILER_FROM}
                 ## SMTP sender name, defaults to 'Bitwarden_RS'.
                 # fromName: ""
                 ## Enable SSL connection.
