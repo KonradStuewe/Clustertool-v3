@@ -22,3 +22,4 @@ resources:
 #  - immich/ks.yaml
   - unpackerr/ks.yaml
   - homebox/ks.yaml
+  - vaultwarden/ks.yaml
