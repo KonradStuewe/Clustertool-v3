@@ -150,7 +150,7 @@ spec:
                     retentionPolicy: "14d"
                 cluster:
                     singleNode: true
-                mode: recovery
+                mode: standalone
                 password: ${VAULTWARDEN_DB_PW}
                 recovery:
                     credentials: aws
