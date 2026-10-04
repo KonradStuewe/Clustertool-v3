@@ -30,13 +30,13 @@ spec:
                 integrations:
                     metallb:
                         enabled: true
-        workload:
-            main:
-                podSpec:
-                    containers:
-                        main:
-                            env:
-                                DOMAIN: "https://{{ if .Values.ingress }}{{ if .Values.ingress.main.enabled }}{{ ( index .Values.ingress.main.hosts 0 ).host }}{{ else }}placeholder.com{{ end }}{{ else }}placeholder.com{{ end }}"
+#        workload:
+#            main:
+#                podSpec:
+#                    containers:
+#                        main:
+#                            env:
+#                                DOMAIN: "https://{{ if .Values.ingress }}{{ if .Values.ingress.main.enabled }}{{ ( index .Values.ingress.main.hosts 0 ).host }}{{ else }}placeholder.com{{ end }}{{ else }}placeholder.com{{ end }}"
         vaultwarden:
             # -- Allow any user to sign-up
             # see: https://github.com/dani-garcia/bitwarden_rs/wiki/Disable-registration-of-new-users
