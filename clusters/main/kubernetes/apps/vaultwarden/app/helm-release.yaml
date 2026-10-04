@@ -157,6 +157,7 @@ spec:
                     enabled: true
         ingress:
             main:
+                enable: true
                 ingressClassName: external
                 integrations:
                     traefik:
